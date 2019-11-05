@@ -4,7 +4,7 @@
       :type="{'is-success': note.importance == 1,'is-warning': note.importance == 2, 'is-danger': note.importance == 3 }"
     >
       <button @click="removeNote" class="delete"></button>
-      {{note.msg}}
+      {{note.text}}
     </b-message>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     removeNote() {
-      this.$emit("removeNote", this.note.id);
+      this.$emit("removeNote", this.note._id);
     }
   }
 };

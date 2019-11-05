@@ -37,7 +37,13 @@ router.patch("/:noteId", async (req, res) => {
   try {
     const updatedNote = await Note.updateOne(
       { _id: req.params.noteId },
-      { $set: { title: req.body.title, text: req.body.text } }
+      {
+        $set: {
+          title: req.body.title,
+          text: req.body.text,
+          importance: req.body.importance
+        }
+      }
     );
     res.json(updatedNote);
   } catch (err) {
@@ -49,7 +55,8 @@ router.patch("/:noteId", async (req, res) => {
 router.post("/", async (req, res) => {
   const note = new Note({
     title: req.body.title,
-    text: req.body.text
+    text: req.body.text,
+    importance: req.body.importance
   });
 
   try {

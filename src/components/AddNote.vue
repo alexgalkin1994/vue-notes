@@ -6,7 +6,7 @@
 
     <section class="modal-card-body">
       <b-field label="Text">
-        <b-input v-model="msg" maxlength="10000" type="textarea"></b-input>
+        <b-input v-model="text" maxlength="10000" type="textarea"></b-input>
       </b-field>
 
       <div class="wrap-buttons">
@@ -29,14 +29,14 @@
 export default {
   data() {
     return {
-      msg: "",
+      text: "",
       importance: 0
     };
   },
 
   methods: {
     add_note(event) {
-      this.$emit("added", { msg: this.msg, importance: this.importance });
+      this.$emit("added", { text: this.text, importance: this.importance });
       this.$parent.close();
     }
   }

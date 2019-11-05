@@ -3,7 +3,6 @@
     <div class="notes-container">
       <Note @removeNote="removeNote($event)" v-for="note in notes" :key="note.id" :note="note"></Note>
     </div>
-
     <section>
       <button class="button is-medium plus-button is-dark" @click="isComponentModalActive = true">+</button>
 
@@ -25,6 +24,7 @@ import uuid from "uuid";
 
 import Note from "./Note.vue";
 import AddNote from "./AddNote.vue";
+import axios from "axios";
 
 export default {
   name: "Notes",
@@ -32,34 +32,64 @@ export default {
   props: {},
   data() {
     return {
-      notes: [
-        { id: 1, msg: "Guten Tag", importance: 1 },
-        { id: 2, msg: "Guten Morgen", importance: 1 },
-        { id: 3, msg: "Guten Abend", importance: 3 },
-        { id: 4, msg: "Gute Nacht", importance: 0 }
-      ],
+      notes: [],
       isComponentModalActive: false,
       noteProps: {
-        msg: "",
+        text: "",
         importance: 1
       }
     };
+  },
+  mounted() {
+    const self = this;
+
+    axios
+      .get("http://localhost:3000/notes")
+      .then(function(response) {
+        self.notes = response.data;
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
   methods: {
     add_note(note) {
       let new_note = {
         id: uuid.v4(),
-        msg: note.msg,
+        text: note.text,
         importance: note.importance
       };
+
+      axios
+        .post("http://localhost:3000/notes", {
+          text: note.text,
+          importance: note.importance
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
+
       this.notes.push(new_note);
-      this.msg = "";
+      this.text = "";
       this.importance = 0;
     },
     removeNote(id) {
+      axios
+        .delete(`http://localhost:3000/notes/${id}`)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
       console.log(id);
+
       this.notes = this.notes.filter(el => {
-        return el.id != id;
+        return el._id != id;
       });
     }
   }
