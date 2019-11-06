@@ -47,7 +47,6 @@ export default {
       .get("http://localhost:3000/notes")
       .then(function(response) {
         self.notes = response.data;
-        console.log(response.data);
       })
       .catch(function(error) {
         console.log(error);
@@ -55,38 +54,36 @@ export default {
   },
   methods: {
     add_note(note) {
-      let new_note = {
-        id: uuid.v4(),
-        text: note.text,
-        importance: note.importance
-      };
-
+      const self = this;
       axios
         .post("http://localhost:3000/notes", {
           text: note.text,
           importance: note.importance
         })
         .then(function(response) {
-          console.log(response);
+          let new_note = {
+            _id: response.data._id,
+            text: note.text,
+            importance: note.importance
+          };
+
+          self.notes.push(new_note);
+          self.text = "";
+          self.importance = 0;
         })
         .catch(function(error) {
           console.error(error);
         });
-
-      this.notes.push(new_note);
-      this.text = "";
-      this.importance = 0;
     },
     removeNote(id) {
       axios
         .delete(`http://localhost:3000/notes/${id}`)
         .then(function(response) {
-          console.log(response);
+          console.log("Post removed");
         })
         .catch(function(error) {
           console.error(error);
         });
-      console.log(id);
 
       this.notes = this.notes.filter(el => {
         return el._id != id;

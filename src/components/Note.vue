@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <b-message
-      :type="{'is-success': note.importance == 1,'is-warning': note.importance == 2, 'is-danger': note.importance == 3 }"
+      :type="{'is-success': note.importance == 1,'is-warning': note.importance == 2, 'is-danger': note.importance == 3}"
     >
       <button @click="removeNote" class="delete"></button>
       {{note.text}}
@@ -13,7 +13,7 @@
 export default {
   name: "Note",
   components: {},
-  props: { note: Object },
+  props: ["note"],
   data() {
     return {};
   },
