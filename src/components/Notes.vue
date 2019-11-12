@@ -1,11 +1,13 @@
 <template>
   <div>
+    <!-- Render all notes -->
     <div class="notes-container">
       <Note @removeNote="removeNote($event)" v-for="note in notes" :key="note.id" :note="note"></Note>
     </div>
     <section>
       <button class="button is-medium plus-button is-dark" @click="isComponentModalActive = true">+</button>
 
+      <!-- Popup to create a new note, opens AddNote -->
       <b-modal
         :active.sync="isComponentModalActive"
         has-modal-card
@@ -20,8 +22,6 @@
 </template>
 
 <script>
-import uuid from "uuid";
-
 import Note from "./Note.vue";
 import AddNote from "./AddNote.vue";
 import axios from "axios";
@@ -53,6 +53,7 @@ export default {
       });
   },
   methods: {
+    // Post new note to MongoDB server
     add_note(note) {
       const self = this;
       axios
@@ -67,6 +68,7 @@ export default {
             importance: note.importance
           };
 
+          // Push onto client array
           self.notes.push(new_note);
           self.text = "";
           self.importance = 0;
@@ -75,6 +77,7 @@ export default {
           console.error(error);
         });
     },
+    // Remove note from MongoDB
     removeNote(id) {
       axios
         .delete(`http://localhost:3000/notes/${id}`)
@@ -84,7 +87,7 @@ export default {
         .catch(function(error) {
           console.error(error);
         });
-
+      // Remove note from client array
       this.notes = this.notes.filter(el => {
         return el._id != id;
       });

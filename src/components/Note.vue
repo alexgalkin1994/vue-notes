@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <!-- Other styling depending on importnace level -->
     <b-message
       :type="{'is-success': note.importance == 1,'is-warning': note.importance == 2, 'is-danger': note.importance == 3}"
     >
@@ -18,6 +19,7 @@ export default {
     return {};
   },
   methods: {
+    // Emit note to parent element for removal
     removeNote() {
       this.$emit("removeNote", this.note._id);
     }

@@ -13,12 +13,7 @@ export default {
   props: {},
   data() {
     return {
-      notes: [
-        { id: 1, msg: "Guten Tag", importance: 1 },
-        { id: 2, msg: "Guten Morgen", importance: 1 },
-        { id: 3, msg: "Guten Abend", importance: 3 },
-        { id: 4, msg: "Gute Nacht", importance: 0 }
-      ]
+      notes: []
     };
   }
 };
