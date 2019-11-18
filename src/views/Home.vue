@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import Dashboard from "@/components/Dashboard.vue";
+import Dashboard from "@/views/Dashboard.vue";
 
 export default {
   name: "home",
@@ -16,5 +16,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Notes from "./Notes.vue";
+import Notes from "../components/Notes.vue";
 
 export default {
   name: "Dashboard",
@@ -21,10 +21,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.bg {
-  background-color: #262833;
-  height: 100vh;
-}
 h3 {
   margin: 40px 0 0;
 }

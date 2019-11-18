@@ -2,10 +2,15 @@
   <div>
     <!-- Render all notes -->
     <div class="notes-container">
-      <Note @removeNote="removeNote($event)" v-for="note in notes" :key="note.id" :note="note"></Note>
+      <Note
+        @removeNote="removeNote($event)"
+        v-for="note in notes"
+        :key="note.id"
+        :note="note"
+      ></Note>
     </div>
     <section>
-      <button class="button is-medium plus-button is-dark" @click="isComponentModalActive = true">+</button>
+      <button class="" @click="isComponentModalActive = true">+</button>
 
       <!-- Popup to create a new note, opens AddNote -->
       <b-modal
@@ -56,6 +61,7 @@ export default {
     // Post new note to MongoDB server
     add_note(note) {
       const self = this;
+      console.log("hi");
       axios
         .post("http://localhost:3000/notes", {
           text: note.text,

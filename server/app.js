@@ -2,20 +2,29 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const passport = require("passport");
 require("dotenv/config");
 
 app.use(
   cors({
-    origin: "http://localhost:8080"
+    origin: "http://localhost:8081"
   })
 );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Passport Middleware
+app.use(passport.initialize());
+// Strategy
+require("./config/passport")(passport);
+
 // Import Routes
 const notesRoute = require("./routes/notes");
 app.use("/notes", notesRoute);
+
+const usersRoute = require("./routes/users");
+app.use("/users", usersRoute);
 
 // Routes
 app.get("/", (req, res) => {

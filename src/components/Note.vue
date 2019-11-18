@@ -1,12 +1,14 @@
 <template>
-  <div class="wrapper">
-    <!-- Other styling depending on importnace level -->
-    <b-message
-      :type="{'is-success': note.importance == 1,'is-warning': note.importance == 2, 'is-danger': note.importance == 3}"
+  <div>
+    <div
+      class="uk-card uk-card-default uk-card-body uk-width-auto uk-margin .uk-margin-medium-right"
     >
+      <h3 class="uk-card-title">Title</h3>
+      <p>
+        {{ note.text }}
+      </p>
       <button @click="removeNote" class="delete"></button>
-      {{note.text}}
-    </b-message>
+    </div>
   </div>
 </template>
 
@@ -28,32 +30,9 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  display: flex;
-  margin: 40px 0px 0px 40px;
-}
-.importance-indicator {
-  height: 10px;
-  width: 10px;
-  margin: 10px;
-  border-radius: 50%;
-}
-
 li {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.green-highlight {
-  background-color: green;
-}
-
-.yellow-highlight {
-  background-color: yellow;
-}
-
-.red-highlight {
-  background-color: red;
 }
 </style>
