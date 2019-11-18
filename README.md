@@ -1,20 +1,9 @@
 # vue-notes
 
-## Project setup
-```
-npm install
-```
+Application to create notes. Sync with Database / MongoDB Atlas.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## To Be Implemented
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# vue-notes
+* User Authentication
+* Sharing Notes with other users
+* Markdown functionality for note text
