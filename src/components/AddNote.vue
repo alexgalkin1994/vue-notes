@@ -1,48 +1,112 @@
 <template>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">New Note</p>
-    </header>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add a new note</h2>
+    <form>
+      <fieldset class="uk-fieldset">
+        <div class="uk-margin">
+          <input
+            class="uk-input"
+            type="text"
+            placeholder="Titel"
+            v-model="note.title"
+          />
+        </div>
 
-    <!-- Note Text Field -->
-    <section class="modal-card-body">
-      <b-field label="Text">
-        <b-input v-model="text" maxlength="10000" type="textarea"></b-input>
-      </b-field>
+        <div class="uk-margin">
+          <select class="uk-select">
+            <option>Cat 1</option>
+            <option>Cat 2</option>
+            <option>Cat 3</option>
+            <option>New Cat</option>
+          </select>
+        </div>
 
-      <!-- Importance Level Selector -->
-      <div class="wrap-buttons">
-        <b-select v-model="importance" name="importance">
-          <option value="0">Not Important</option>
-          <option value="1">Low Importance</option>
-          <option value="2">Mid Importance</option>
-          <option value="3">High Importance</option>
-        </b-select>
+        <div class="uk-margin">
+          <textarea
+            class="uk-textarea"
+            rows="5"
+            placeholder="Text..."
+            maxlength="100000"
+            v-model="note.text"
+          ></textarea>
+        </div>
 
-        <b-button class="add-note-button" @click="add_note">Add Note</b-button>
-      </div>
-    </section>
-
-    <footer class="modal-card-foot">
-      <button class="button" type="button" @click="$parent.close()">Close</button>
-    </footer>
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+          <label
+            ><input
+              class="uk-radio"
+              v-model="note.importance"
+              type="radio"
+              name="important"
+              value="0"
+              checked
+            />
+            Not Important</label
+          >
+          <label
+            ><input
+              class="uk-radio"
+              v-model="note.importance"
+              type="radio"
+              name="important"
+              value="1"
+            />
+            Slightly Important</label
+          >
+          <label
+            ><input
+              class="uk-radio"
+              v-model="note.importance"
+              type="radio"
+              name="important"
+              value="2"
+            />
+            Important</label
+          >
+          <label
+            ><input
+              class="uk-radio"
+              v-model="note.importance"
+              type="radio"
+              name="important"
+              value="3"
+            />
+            Very Important</label
+          >
+        </div>
+      </fieldset>
+    </form>
+    <p class="uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">
+        Cancel
+      </button>
+      <button
+        class="uk-button uk-button-primary uk-modal-close"
+        @click="add_new_note"
+        type="button"
+      >
+        Save
+      </button>
+    </p>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
-    return {
-      text: "",
-      importance: 0
-    };
+    return { note: { title: "", text: "", importance: 0 } };
   },
 
   methods: {
+    ...mapActions(["addNote"]),
     // Emit note to parent element
-    add_note(event) {
-      this.$emit("added", { text: this.text, importance: this.importance });
-      this.$parent.close();
+    add_new_note(event) {
+      this.addNote(this.note);
+      this.note.title = "";
+      this.note.text = "";
+      this.note.importance = 0;
     }
   }
 };
@@ -53,7 +117,9 @@ export default {
   display: flex;
 }
 
-.add-note-button {
-  margin-left: auto;
+.add-note-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 </style>

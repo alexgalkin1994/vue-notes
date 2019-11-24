@@ -3,16 +3,18 @@
     <div
       class="uk-card uk-card-default uk-card-body uk-width-auto uk-margin .uk-margin-medium-right"
     >
-      <h3 class="uk-card-title">Title</h3>
+      <h3 class="uk-card-title">{{ note.title }}</h3>
       <p>
         {{ note.text }}
       </p>
-      <button @click="removeNote" class="delete"></button>
+      <button @click="removeNote" class="delete">Remove</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Note",
   components: {},
@@ -21,9 +23,10 @@ export default {
     return {};
   },
   methods: {
-    // Emit note to parent element for removal
+    // remove note
+    ...mapActions(["deleteNote"]),
     removeNote() {
-      this.$emit("removeNote", this.note._id);
+      this.deleteNote(this.note._id);
     }
   }
 };

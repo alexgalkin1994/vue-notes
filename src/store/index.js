@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Auth from "../warehouse/Auth";
+import Auth from "./Auth";
+import Notes from "./Notes";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
-  modules: { Auth }
+  modules: { Auth, Notes }
 });

@@ -20,14 +20,12 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    component: () => import("../views/About.vue")
   },
   {
     path: "/login",
     name: "login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
+    component: () => import("../views/Login.vue"),
     meta: {
       requiresGuest: true
     }
@@ -35,8 +33,7 @@ const routes = [
   {
     path: "/register",
     name: "register",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
+    component: () => import("../views/Register.vue"),
     meta: {
       requiresGuest: true
     }
@@ -44,8 +41,7 @@ const routes = [
   {
     path: "/profile",
     name: "profile",
-    component: () =>
-      import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
+    component: () => import("../views/Profile.vue"),
     meta: {
       requiresAuth: true
     }
@@ -53,8 +49,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "dashboard",
-    component: () =>
-      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
+    component: () => import("../views/Dashboard.vue"),
     meta: {
       requiresAuth: true
     }
@@ -76,7 +71,7 @@ router.beforeEach((to, from, next) => {
     }
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
     if (store.getters.isLoggedIn) {
-      next("/profile");
+      next("/dashboard");
     } else {
       next();
     }

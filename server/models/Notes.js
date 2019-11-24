@@ -5,6 +5,9 @@ const NotesSchema = mongoose.Schema({
   title: {
     type: String
   },
+  author: {
+    type: String
+  },
   text: {
     type: String
   },

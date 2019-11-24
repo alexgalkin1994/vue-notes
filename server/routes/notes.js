@@ -1,15 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const Note = require("../models/Notes");
+const verify = require("./verifyToken");
 
 // Get all notes
-router.get("/", async (req, res) => {
+// router.get("/", async (req, res) => {
+//   try {
+//     const notes = await Note.find();
+//     res.json(notes);
+//   } catch (err) {
+//     res.json({ message: err });
+//   }
+// });
+
+// Get all notes from specific user
+router.get("/", verify, async (req, res) => {
+  console.log(req.user._id);
   try {
-    const notes = await Note.find();
-    res.json(notes);
-  } catch (err) {
-    res.json({ message: err });
-  }
+    const notes = await Note.find({ author: req.user._id });
+    console.log(notes);
+    res.json(notes).send("bin hier");
+  } catch (err) {}
 });
 
 // Get a specific note
@@ -52,9 +63,11 @@ router.patch("/:noteId", async (req, res) => {
 });
 
 // Post a note
-router.post("/", async (req, res) => {
+router.post("/", verify, async (req, res) => {
+  console.log(req.body.title);
   const note = new Note({
     title: req.body.title,
+    author: req.user._id,
     text: req.body.text,
     importance: req.body.importance
   });

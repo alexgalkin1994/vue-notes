@@ -1,6 +1,7 @@
 import axios from "axios";
 import router from "../router";
 import { longStackSupport } from "q";
+import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
 
 const state = {
   token: localStorage.getItem("token") || "",
@@ -15,31 +16,26 @@ const getters = {
       return false;
     }
   },
-  authState: state => state.status,
-  user: state => state.user
+  user: state => state.user,
+  authState: state => state.status
 };
 const actions = {
   // Login
   async login({ commit }, user) {
     commit("auth_request");
-    let res = await axios.post("http://localhost:3000/users/login", user);
-    if (res.data.success) {
-      const token = res.data.token;
-      const user = res.data.user;
-      localStorage.setItem("token", token);
-      axios.defaults.headers.common["Authorization"] = token;
-      commit("auth_success", token, user);
-    }
+    let res = await axios.post("http://localhost:3000/api/auth/login", user);
+    const token = res.data;
+    const username = res.config.data.username;
+    localStorage.setItem("token", token);
+    axios.defaults.headers.common["Authorization"] = token;
+    commit("auth_success", token, username);
     return res;
   },
 
   // Register
   async register({ commit }, userData) {
     commit("register_request");
-    let res = await axios.post(
-      "http://localhost:3000/users/register",
-      userData
-    );
+    let res = await axios.post("http://localhost:3000/auth/register", userData);
     if (res.data.success !== undefined) {
       commit("register_success");
     }
@@ -53,16 +49,9 @@ const actions = {
     delete axios.defaults.headers.common["Authorization"];
     router.push("/login");
     return;
-  },
-
-  // Get User Profile
-  async getProfile({ commit }) {
-    commit("profile_request");
-    let res = await axios.get("http://localhost:3000/users/profile");
-    commit("user_profile", res.data.user);
-    return res;
   }
 };
+
 const mutations = {
   auth_request(state) {
     state.status = "loading";

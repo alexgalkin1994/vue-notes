@@ -6,6 +6,7 @@
 
 <script>
 import Notes from "../components/Notes.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Dashboard",
