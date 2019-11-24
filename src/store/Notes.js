@@ -1,10 +1,12 @@
 import axios from "axios";
 
 const state = {
-  notes: []
+  notes: [],
+  currentNote: {}
 };
 const getters = {
-  allNotes: state => state.notes
+  allNotes: state => state.notes,
+  currentNote: state => state.currentNote
 };
 const actions = {
   // Get User Notes
@@ -34,6 +36,9 @@ const actions = {
   async deleteNote({ commit }, id) {
     const response = await axios.delete(`http://localhost:3000/notes/${id}`);
     commit("delete_note", id);
+  },
+  setCurNote({ commit }, note) {
+    commit("set_current_note", note);
   }
 };
 
@@ -48,6 +53,9 @@ const mutations = {
     state.notes = state.notes.filter(el => {
       return el._id != id;
     });
+  },
+  set_current_note(state, note) {
+    state.currentNote = note;
   }
 };
 

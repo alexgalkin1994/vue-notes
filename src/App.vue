@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <div class="">
+    <div class="view">
       <router-view></router-view>
     </div>
   </div>
@@ -22,8 +22,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  height: 100vh;
 }
 
+.view {
+  height: calc(100vh - 80px);
+}
 #nav {
   padding: 30px;
 

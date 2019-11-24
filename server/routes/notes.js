@@ -19,7 +19,7 @@ router.get("/", verify, async (req, res) => {
   try {
     const notes = await Note.find({ author: req.user._id });
     console.log(notes);
-    res.json(notes).send("bin hier");
+    res.json(notes).send("");
   } catch (err) {}
 });
 

@@ -6,22 +6,24 @@
 
 <script>
 import Notes from "../components/Notes.vue";
-import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Dashboard",
   components: { Notes },
   props: {},
   data() {
-    return {
-      notes: []
-    };
+    return {};
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.bg {
+  overflow: auto;
+  height: 100%;
+}
+
 h3 {
   margin: 40px 0 0;
 }

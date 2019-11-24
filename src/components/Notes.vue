@@ -1,41 +1,22 @@
 <template>
-  <div>
+  <div class="wrapper">
+    <Sidebar />
     <!-- Render all notes -->
-    <div class="notes-container">
-      <Note
-        @removeNote="removeNote($event)"
-        v-for="note in allNotes"
-        :key="note.id"
-        :note="note"
-      ></Note>
-    </div>
-    <section>
-      <!-- This is a button toggling the modal -->
-      <button
-        class="uk-button uk-button-default uk-margin-small-right plus-button uk-border-circle uk-box-shadow-large"
-        type="button"
-        uk-toggle="target: #modal-add-note"
-      >
-        +
-      </button>
-
-      <!-- This is the modal -->
-      <div id="modal-add-note" uk-modal>
-        <AddNote @added="add_note($event)"></AddNote>
-      </div>
-    </section>
+    <NoteView />
   </div>
 </template>
 
 <script>
 import Note from "./Note.vue";
 import AddNote from "./AddNote.vue";
+import Sidebar from "./Sidebar.vue";
+import NoteView from "./NoteView.vue";
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Notes",
-  components: { Note, AddNote },
+  components: { Note, AddNote, Sidebar, NoteView },
   computed: { ...mapGetters(["allNotes"]) },
   props: {},
   data() {
@@ -44,17 +25,17 @@ export default {
   methods: {
     ...mapActions(["getNotes"])
     // Remove note from MongoDB
-  },
-  created() {
-    this.getNotes();
   }
 };
 </script>
 
 <style scoped>
-.notes-container {
-  list-style: none;
-  display: flex;
+.wrapper {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-gap: 10px;
+  height: 100%;
+  overflow: hidden;
 }
 
 .plus-button {
