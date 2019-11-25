@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="mainElement">
     <div
       @mouseover="hover = true"
       @mouseleave="hover = false"
       @click="setCurrentNote"
-      class="single uk-card uk-card-default uk-card-body uk-width-auto uk-margin .uk-margin-medium-right"
+      class="singleNoteItem"
     >
       <h2 class="uk-card-title title-text">{{ note.title }}</h2>
       <span v-if="note.importance === 1" class="uk-label uk-label-success"
@@ -22,10 +22,32 @@
       <!-- <button @click="removeNote" class="delete">Remove</button> -->
       <span
         v-if="hover"
-        @click.stop="removeNote"
         class="delete"
         uk-icon="trash"
+        uk-toggle="target: #modal-example"
       ></span>
+
+      <!-- This is the modal -->
+      <div id="modal-example" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Remove Note?</h2>
+          <p class="uk-text-right">
+            <button
+              class="uk-button uk-button-default uk-modal-close"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="uk-button uk-button-danger uk-modal-close"
+              @click="removeNote"
+              type="button"
+            >
+              Remove
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -59,10 +81,14 @@ li {
   justify-content: center;
   align-items: center;
 }
-
 .title-text {
   font-size: 1rem;
   margin: 0px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 150px;
+  display: block;
+  overflow: hidden;
 }
 .uk-label {
   height: 16px;
@@ -79,10 +105,16 @@ li {
 .delete {
   cursor: pointer;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 5px;
+  color: #999;
 }
-.single {
+.delete:hover {
+  color: #333;
+}
+.singleNoteItem {
+  position: relative;
+  transition: border-bottom 0.2s;
   height: 100px;
   margin: 0px;
   cursor: pointer;
@@ -90,5 +122,11 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-bottom: 2px transparent solid;
+  box-shadow: 0 4px 5px -2px rgba(160, 160, 160, 0.349);
+}
+
+.singleNoteItem:hover {
+  border-bottom: 2px #1e87f0 solid;
 }
 </style>

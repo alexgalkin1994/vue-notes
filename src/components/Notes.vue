@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <Sidebar />
+    <div class="divider uk-divider-vertical"></div>
     <!-- Render all notes -->
     <NoteView />
   </div>
@@ -32,10 +33,17 @@ export default {
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-gap: 10px;
+  grid-template-columns: 200px 20px 1fr;
+  /* grid-gap: 10px; */
   height: 100%;
   overflow: hidden;
+}
+
+.divider {
+  height: 94%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .plus-button {

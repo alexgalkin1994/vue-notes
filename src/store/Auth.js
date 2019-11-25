@@ -35,7 +35,10 @@ const actions = {
   // Register
   async register({ commit }, userData) {
     commit("register_request");
-    let res = await axios.post("http://localhost:3000/auth/register", userData);
+    let res = await axios.post(
+      "http://localhost:3000/api/auth/register",
+      userData
+    );
     if (res.data.success !== undefined) {
       commit("register_success");
     }
@@ -71,9 +74,6 @@ const mutations = {
     state.status = "";
     state.token = "";
     state.user = "";
-  },
-  profile_request(state) {
-    state.status = "loading";
   },
   user_profile(state, user) {
     state.user = user;

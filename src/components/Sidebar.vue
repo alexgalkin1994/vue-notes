@@ -14,6 +14,7 @@ export default {
 
 <style>
 .sidebar {
+  margin-left: 10px;
   height: 100%;
   overflow: scroll;
 }

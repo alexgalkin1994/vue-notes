@@ -14,6 +14,10 @@ const registerValidation = usr => {
       .min(6)
       .max(1024)
       .required(),
+    confirm_password: Joi.string()
+      .min(6)
+      .max(1024)
+      .required(),
 
     email: Joi.string()
       .email()

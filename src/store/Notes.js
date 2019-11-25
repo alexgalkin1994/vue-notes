@@ -29,6 +29,7 @@ const actions = {
       importance: response.data.importance
     };
     commit("add_note", new_note);
+    commit("set_new_current_note");
     return response;
   },
 
@@ -36,6 +37,7 @@ const actions = {
   async deleteNote({ commit }, id) {
     const response = await axios.delete(`http://localhost:3000/notes/${id}`);
     commit("delete_note", id);
+    commit("set_new_current_note");
   },
   setCurNote({ commit }, note) {
     commit("set_current_note", note);
@@ -56,6 +58,13 @@ const mutations = {
   },
   set_current_note(state, note) {
     state.currentNote = note;
+  },
+  set_new_current_note(state) {
+    if (state.notes.length > 0) {
+      state.currentNote = state.notes[state.notes.length - 1];
+    } else {
+      state.currentNote = {};
+    }
   }
 };
 

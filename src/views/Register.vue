@@ -101,8 +101,10 @@ export default {
         confirm_password: this.confirm_password,
         email: this.email
       };
+
       this.register(user).then(res => {
-        if (res.data.success) {
+        console.log(res);
+        if (res.status === 200) {
           this.$router.push("login");
         }
       });
