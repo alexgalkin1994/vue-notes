@@ -101,7 +101,7 @@ export default {
 
   methods: {
     ...mapActions(["addNote"]),
-    // Emit note to parent element
+
     add_new_note(event) {
       this.addNote(this.note);
       this.note.title = "";

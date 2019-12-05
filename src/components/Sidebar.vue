@@ -14,8 +14,12 @@ export default {
 
 <style>
 .sidebar {
-  margin-left: 10px;
+  box-sizing: border-box;
+  padding: 10px;
   height: 100%;
   overflow: scroll;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
 }
 </style>

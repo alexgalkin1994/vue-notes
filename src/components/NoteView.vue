@@ -7,12 +7,48 @@
           v-if="!(!currentNote || Object.keys(currentNote).length === 0)"
           class="currentNoteView"
           :key="currentNote._id"
+          @mouseover="hover = true"
+          @mouseleave="hover = false"
         >
-          <h2 class="uk-h2 uk-heading-bullet uk-text-capitalize">
-            {{ currentNote.title }}
-          </h2>
+          <span
+            v-if="hover"
+            class="pencil"
+            uk-icon="pencil"
+            @click="editNote"
+          ></span>
 
-          <p>{{ currentNote.text }}</p>
+          <div v-if="this.editMode" class="editMode">
+            <input
+              v-model="currentNote.title"
+              class="uk-input uk-padding-small edit-title"
+              type="text"
+              placeholder="Title"
+            />
+
+            <textarea
+              v-model="currentNote.text"
+              class="uk-textarea uk-margin edit-text"
+              rows="5"
+              placeholder="Textarea"
+            ></textarea>
+
+            <button
+              v-if="editMode"
+              class="uk-button save-button uk-button-primary uk-box-shadow-large"
+              type="button"
+              @click="save_edit"
+            >
+              Save
+            </button>
+          </div>
+
+          <div v-else class="content">
+            <h2 class="uk-h2 uk-heading-bullet uk-text-capitalize ">
+              {{ currentNote.title }}
+            </h2>
+
+            <div>{{ currentNote.text }}</div>
+          </div>
         </div>
 
         <div v-else class="uk-text-lighter uk-text-muted createText">
@@ -50,18 +86,47 @@ export default {
   computed: { ...mapGetters(["currentNote"]) },
   props: {},
   data() {
-    return {};
+    return { hover: false, editMode: false };
   },
-  methods: {}
+  methods: {
+    ...mapActions(["saveEdit"]),
+
+    save_edit(event) {
+      this.saveEdit(this.currentNote);
+      this.editMode = false;
+      UIkit.notification({
+        message: "<span uk-icon='icon: check'></span> Changes saved!",
+        status: "success",
+        pos: "top-center"
+      });
+    },
+
+    editNote() {
+      this.editMode = !this.editMode;
+    }
+  }
 };
 </script>
 
 <style scoped>
-p {
-  white-space: pre;
-}
 section {
   height: 100%;
+}
+.edit-title {
+  font-size: 1.6rem;
+  padding: 25px 20px;
+}
+input[type="text"] {
+  width: 80%;
+}
+.edit-text {
+  height: 100%;
+}
+.content {
+  width: 90%;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
 }
 
 .createText {
@@ -73,6 +138,10 @@ section {
   font-size: 3rem;
 }
 .currentNoteView {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
   padding: 50px;
   text-align: left;
 }
@@ -100,5 +169,18 @@ section {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.pencil {
+  position: absolute;
+  top: 55px;
+  right: 55px;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.save-button {
+  width: 200px;
+  margin-left: auto;
 }
 </style>

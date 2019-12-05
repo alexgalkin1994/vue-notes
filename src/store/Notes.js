@@ -22,14 +22,38 @@ const actions = {
       text: note.text,
       importance: note.importance
     });
+    console.log(response);
     const new_note = {
       _id: response.data._id,
       title: response.data.title,
       text: response.data.text,
-      importance: response.data.importance
+      importance: response.data.importance,
+      date: response.data.date
     };
     commit("add_note", new_note);
     commit("set_new_current_note");
+    return response;
+  },
+  // Edit note
+  async saveEdit({ commit }, note) {
+    const response = await axios.put(
+      `http://localhost:3000/notes/${note._id}`,
+      {
+        title: note.title,
+        text: note.text,
+        importance: note.importance
+      }
+    );
+    console.log(response);
+    const edited_note = {
+      _id: note._id,
+      title: response.data.title,
+      text: response.data.text,
+      importance: response.data.importance
+    };
+
+    console.log(edited_note);
+    commit("update_note", edited_note);
     return response;
   },
 
@@ -56,6 +80,14 @@ const mutations = {
       return el._id != id;
     });
   },
+
+  update_note(state, note) {
+    let itemIndex = state.notes.findIndex(obj => obj._id == note._id);
+    state.notes[itemIndex].title = note.title;
+    state.notes[itemIndex].text = note.text;
+    state.notes[itemIndex].importance = note.importance;
+  },
+
   set_current_note(state, note) {
     state.currentNote = note;
   },

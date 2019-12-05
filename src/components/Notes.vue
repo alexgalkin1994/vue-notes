@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <Sidebar />
-    <div class="divider uk-divider-vertical"></div>
+
     <!-- Render all notes -->
     <NoteView />
   </div>
@@ -33,8 +33,7 @@ export default {
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: 200px 20px 1fr;
-  /* grid-gap: 10px; */
+  grid-template-columns: 300px 1fr;
   height: 100%;
   overflow: hidden;
 }

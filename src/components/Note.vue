@@ -4,9 +4,7 @@
       class="uk-card uk-card-default uk-card-body uk-width-auto uk-margin .uk-margin-medium-right"
     >
       <h3 class="uk-card-title">{{ note.title }}</h3>
-      <p class="text">
-        {{ note.text }}
-      </p>
+      <p class="text">{{ note.text }}</p>
 
       <!-- <button @click="removeNote" class="delete">Remove</button> -->
       <span @click="removeNote" class="delete" uk-icon="trash"></span>

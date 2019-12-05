@@ -44,18 +44,24 @@ router.delete("/:noteId", async (req, res) => {
 });
 
 // Update a specific note
-router.patch("/:noteId", async (req, res) => {
+router.put("/:noteId", async (req, res) => {
   try {
-    const updatedNote = await Note.updateOne(
+    console.log("req");
+    console.log(req);
+    const updatedNote = await Note.findOneAndUpdate(
       { _id: req.params.noteId },
       {
         $set: {
           title: req.body.title,
           text: req.body.text,
-          importance: req.body.importance
+          importance: req.body.importance,
+          edited: true
         }
-      }
+      },
+      { new: true }
     );
+    console.log("weqni uweqeiuqneiuqneuiwnqeiuqwueqi");
+    console.log(updatedNote);
     res.json(updatedNote);
   } catch (err) {
     res.json({ message: err });

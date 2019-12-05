@@ -2,8 +2,9 @@
   <div class="wrapper">
     <SingleNoteView
       v-for="note in allNotes.slice().reverse()"
-      :key="note.id"
+      :key="note._id"
       :note="note"
+      class="singleNote"
     ></SingleNoteView>
   </div>
 </template>
@@ -16,7 +17,9 @@ export default {
   components: { SingleNoteView },
   computed: { ...mapGetters(["allNotes"]) },
   data() {
-    return {};
+    return {
+      selected: undefined
+    };
   },
   methods: {
     ...mapActions(["getNotes"])
@@ -32,5 +35,8 @@ export default {
   height: 100%;
   width: 100%;
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

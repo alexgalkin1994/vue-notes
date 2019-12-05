@@ -1,12 +1,22 @@
 <template>
+  <!-- Notes on the left side in the sidebar -->
   <div class="mainElement">
     <div
       @mouseover="hover = true"
       @mouseleave="hover = false"
       @click="setCurrentNote"
       class="singleNoteItem"
+      :class="{ activeNote: this.note._id == currentNote._id }"
     >
-      <h2 class="uk-card-title title-text">{{ note.title }}</h2>
+      <div class="dates">
+        <span>{{ moment(this.date).format("MMMM Do YYYY") }}</span>
+        <span>{{ moment(this.date).format("h:mm a") }}</span>
+      </div>
+
+      <h2 class="uk-text-capitalize">{{ note.title }}</h2>
+
+      <div class="noteText">{{ note.text }}</div>
+
       <span v-if="note.importance === 1" class="uk-label uk-label-success"
         >Slightly Important</span
       >
@@ -27,7 +37,7 @@
         uk-toggle="target: #modal-example"
       ></span>
 
-      <!-- This is the modal -->
+      <!-- Remove modal -->
       <div id="modal-example" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
           <h2 class="uk-modal-title">Remove Note?</h2>
@@ -53,15 +63,21 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Note",
   components: {},
   props: ["note"],
+  computed: { ...mapGetters(["currentNote"]) },
   data() {
-    return { hover: false };
+    return {
+      hover: false,
+      selected: undefined,
+      date: new Date(this.note.date)
+    };
   },
+
   methods: {
     // remove note
     ...mapActions(["deleteNote", "setCurNote"]),
@@ -70,32 +86,39 @@ export default {
     },
     setCurrentNote() {
       this.setCurNote(this.note);
+      this.selected = this.note._id;
     }
   }
 };
 </script>
 
 <style scoped>
+.dates {
+  display: flex;
+  justify-content: space-between;
+}
 li {
   display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+h2 {
+  margin: 0px;
+  text-align: left;
+  font-size: 1.6rem;
 }
 .title-text {
-  font-size: 1rem;
   margin: 0px;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 150px;
+  width: 250px;
   display: block;
   overflow: hidden;
 }
 .uk-label {
   height: 16px;
+  width: fit-content;
   font-size: 12px;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .text {
@@ -105,7 +128,7 @@ li {
 .delete {
   cursor: pointer;
   position: absolute;
-  top: 20px;
+  bottom: 10px;
   right: 5px;
   color: #999;
 }
@@ -115,18 +138,34 @@ li {
 .singleNoteItem {
   position: relative;
   transition: border-bottom 0.2s;
-  height: 100px;
-  margin: 0px;
+  padding: 10px;
+  height: 120px;
+  margin-bottom: 10px;
+  width: 250px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 2px transparent solid;
-  box-shadow: 0 4px 5px -2px rgba(160, 160, 160, 0.349);
+  background-color: #fff;
+  border: 4px #fff solid;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
+  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.singleNoteItem:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+  transform: scale(1.01);
+}
+.activeNote {
+  border-left: 4px #1e87f0 solid;
 }
 
-.singleNoteItem:hover {
-  border-bottom: 2px #1e87f0 solid;
+.noteText {
+  height: 50px;
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
 }
 </style>
